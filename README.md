@@ -8,7 +8,7 @@ Easy to use and build
 
 **Build and start on host**
 
-to root project launch start.sh on host machine `build and lounch java -jar finalname.jar `
+to root project launch start.sh on host machine `build with maven and lounch java -jar finalname.jar `
 
 **Build project and start in a Docker container**
 

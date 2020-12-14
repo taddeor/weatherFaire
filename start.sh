@@ -2,7 +2,7 @@
 DIR="$( dirname $0 )"
 cd "$DIR"
 
-#mvn clean install
+mvn clean install
 
 if [ "x$JAVA" = "x" ]; then
     if [ "x$JAVA_HOME" != "x" ]; then
