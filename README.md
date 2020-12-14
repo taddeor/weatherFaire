@@ -22,6 +22,7 @@ expose three RESTFul service
 **RESTful min and max temperature and humidity during work hours**
 
 curl -X GET "http://localhost:8080/prediction-work-hour/{city}" -H  "accept: application/json"
+
 Response
 ```json
 {
