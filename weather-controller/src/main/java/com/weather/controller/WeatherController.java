@@ -51,7 +51,7 @@ public class WeatherController {
 
     @Operation(
             tags = "Weather",
-            description = "Endpoint to get an prediction for nex three days aggregate in and aout side work hours"
+            description = "Endpoint to get an prediction for nex three days aggregate in and out side work hours"
     )
     @GetMapping(value = "prediction-aggregate/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public WeatherAggregateResponse predictionAggregate(@PathVariable(value = "city") String city){

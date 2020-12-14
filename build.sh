@@ -2,7 +2,7 @@
 DIR="$( dirname $0 )"
 cd "$DIR"
 
-#mvn clean install
+mvn clean install
 
 mkdir -p tmp
 
