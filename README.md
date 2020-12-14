@@ -23,52 +23,57 @@ expose three RESTFul service
 
 curl -X GET "http://localhost:8080/prediction-work-hour/{city}" -H  "accept: application/json"
 Response
+```json
 {
     "workHours": [
-    {
-    "dateTime": "2020-12-14T12:59:24.462Z",
-    "maxTemp": 0,
-    "minTemp": 0,
-    "humidity": 0
-    }
+        {
+        "dateTime": "2020-12-14T12:59:24.462Z",
+        "maxTemp": 0,
+        "minTemp": 0,
+        "humidity": 0
+        }
     ]
 }
-
-**RESTful min and max temperature and humidity aggregate in work hours and outside hours**
+```
+**RESTful min and max temperature and humidity aggregate in work hours and out work hours**
 
 curl -X GET "http://localhost:8080/prediction-aggregate/{city}" -H  "accept: application/json"
-Response
-{
-"outWorkHours": [
-{
-"dateTime": "2020-12-14T13:00:12.554Z",
-"maxTemp": 0,
-"minTemp": 0,
-"humidity": 0
-}
-],
-"workHours": [
-{
-"dateTime": "2020-12-14T13:00:12.554Z",
-"maxTemp": 0,
-"minTemp": 0,
-"humidity": 0
-}
-]
-}
 
+Response
+```json
+{
+    "outWorkHours": [
+        {
+        "dateTime": "2020-12-14T13:00:12.554Z",
+        "maxTemp": 0,
+        "minTemp": 0,
+        "humidity": 0
+        }
+    ],
+    "workHours": [
+        {
+        "dateTime": "2020-12-14T13:00:12.554Z",
+        "maxTemp": 0,
+        "minTemp": 0,
+        "humidity": 0
+        }
+    ]
+}
+```
 **RESTful min and max temperature and humidity during outside work hours**
 
 curl -X GET "http://localhost:8080/prediction-outside-work-hour/{city}" -H  "accept: application/json"
-Response
-{
-"outWorkHours": [
-{
-"dateTime": "2020-12-14T12:59:24.446Z",
-"maxTemp": 0,
-"minTemp": 0,
-"humidity": 0
-}
-]
-}
 
+Response
+```json
+    {
+    "outWorkHours": [
+        {
+        "dateTime": "2020-12-14T12:59:24.446Z",
+        "maxTemp": 0,
+        "minTemp": 0,
+        "humidity": 0
+        }
+    ]
+}
+```
