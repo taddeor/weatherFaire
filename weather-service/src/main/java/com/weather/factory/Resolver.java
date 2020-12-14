@@ -11,7 +11,7 @@ import java.util.Map;
  */
 @AllArgsConstructor(staticName = "from")
 public class Resolver {
-    public  WeatherAggregator resolve(WeatherType weatherType){
+    public  <T>  WeatherAggregator<T> resolve(WeatherType weatherType , Class<T> valueType){
         return weatherAggregatorMap.get(weatherType);
     }
     private Map<WeatherType, WeatherAggregator> weatherAggregatorMap ;

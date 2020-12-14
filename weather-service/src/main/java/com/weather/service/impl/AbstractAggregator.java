@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,11 +45,16 @@ public abstract class AbstractAggregator<T> implements WeatherAggregator<T> {
                 .collect(Collectors.groupingBy(ListValue::getDate))
                 .entrySet().stream().sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+                        (oldValue, newValue) -> oldValue, HashMap::new));
 
         return prediction(dateListLinkedHashMap);
     }
 
+    /**
+     * abstract methode to filter future prediction of service openweather
+     * @param localDateListMap
+     * @return
+     */
     public abstract T prediction(Map<LocalDate, List<ListValue>> localDateListMap);
 
     /**
@@ -60,34 +65,29 @@ public abstract class AbstractAggregator<T> implements WeatherAggregator<T> {
      * @return
      */
     protected List<WeatherWorkHour> calculatePredictionWorkHours(LocalDateTime end, LocalDateTime startWork, List<ListValue> localDateListEntry) {
+        //filtered between star and end date
         var filteredValueList = localDateListEntry.stream()
                 .filter(listValue -> listValue.getDateTime().isAfter(startWork) && listValue.getDateTime().isBefore(end))
                 .collect(Collectors.toList());
-
+        //remove
         localDateListEntry.removeAll(filteredValueList);
-
-        var weatherWorkHours = filteredValueList.stream()
+        //return mapping list on WeatherWorkHour
+        return filteredValueList.stream()
                 .map(listValue -> WeatherWorkHour.from(listValue.getDateTime(),listValue.getMain().getTempMax(), listValue.getMain().getTempMin(), listValue.getMain().getHumidity()))
                 .collect(Collectors.toList());
 
-        return weatherWorkHours;//WorkHour.from( LocalDateTime.of(startWork.toLocalDate(),startWork.toLocalTime().plusSeconds(1)), LocalDateTime.of(end.toLocalDate(),end.toLocalTime().minusSeconds(1)),weatherWorkHours);
     }
 
     /**
-     * all antri with out calculating workHour
+     * all antry with out calculating workHour
      * @param end
      * @param startWork
      * @param localDateListEntry
      * @return
      */
     protected List<WeatherOutWorkHour> calculatePredictionOutSideWorkHours(LocalDateTime end, LocalDateTime startWork, List<ListValue> localDateListEntry) {
-        var min = localDateListEntry.stream().map(ListValue::getDateTime).min(LocalDateTime::compareTo);
-        var max = localDateListEntry.stream().map(ListValue::getDateTime).max(LocalDateTime::compareTo);
-        var weatherOutWorkHours = localDateListEntry.stream()
+         return localDateListEntry.stream()
                 .map(listValue ->   WeatherOutWorkHour.from(listValue.getDateTime(),listValue.getMain().getTempMax(), listValue.getMain().getTempMin(), listValue.getMain().getHumidity()))
                 .collect(Collectors.toList());
-
-
-        return weatherOutWorkHours;//OutWorkHour.from( min.get(), max.get(),weatherOutWorkHours);
     }
 }

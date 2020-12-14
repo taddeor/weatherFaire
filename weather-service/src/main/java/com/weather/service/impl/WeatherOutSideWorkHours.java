@@ -46,7 +46,9 @@ public class WeatherOutSideWorkHours extends AbstractAggregator<WeatherOutSideRe
         List<WeatherOutWorkHour> outWorkHours = new ArrayList<>();
 
         for (Map.Entry<LocalDate, List<ListValue>> localDateListEntry : localDateListMap.entrySet()) {
+            //calculare and remove work hours
             calculatePredictionWorkHours(endWork, startWork, localDateListEntry.getValue());
+            //add only out work hours
             outWorkHours.addAll(calculatePredictionOutSideWorkHours(endWork, startWork, localDateListEntry.getValue()));
             startWork = startWork.plusDays(1);
             endWork = endWork.plusDays(1);

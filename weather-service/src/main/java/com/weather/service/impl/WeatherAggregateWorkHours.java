@@ -30,7 +30,6 @@ public class WeatherAggregateWorkHours extends AbstractAggregator<WeatherAggrega
 
     public WeatherAggregateWorkHours(ForecastWeatherApi forecastWeatherApi) {
         super(forecastWeatherApi);
-
     }
 
     @Override
@@ -38,6 +37,11 @@ public class WeatherAggregateWorkHours extends AbstractAggregator<WeatherAggrega
         return WeatherType.AGGREGATE;
     }
 
+    /**
+     * aggregate all value in a single response have temperature from work hours and out work hours
+     * @param localDateListMap
+     * @return WeatherAggregateResponse
+     */
     @Override
     public WeatherAggregateResponse prediction(Map<LocalDate, List<ListValue>> localDateListMap) {
         LocalDateTime startWork = LocalDateTime.now().plusDays(1).toLocalDate().atTime(startWorkTime).minusSeconds(1);

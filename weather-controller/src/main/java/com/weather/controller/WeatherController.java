@@ -32,9 +32,9 @@ public class WeatherController {
     )
     @GetMapping(value = "prediction-work-hour/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public WeatherResponse predictionWorkHour(@PathVariable(value = "city") String city){
-        var weather = resolver.resolve(WeatherType.WORKHOUR).callServiceWeather(city);
+        var weather = resolver.resolve(WeatherType.WORKHOUR,WeatherResponse.class).callServiceWeather(city);
         log.info("Response [{}]",weather);
-        return(weather instanceof WeatherResponse )?(WeatherResponse) weather:null;
+        return weather;
     }
 
     @Operation(
@@ -43,9 +43,9 @@ public class WeatherController {
     )
     @GetMapping(value = "prediction-outside-work-hour/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public WeatherOutSideResponse predictionOutSideWorkHour(@PathVariable(value = "city") String city){
-        var weather = resolver.resolve(WeatherType.WORKOUTSIDEHOUR).callServiceWeather(city);
+        var weather = resolver.resolve(WeatherType.WORKOUTSIDEHOUR,WeatherOutSideResponse.class).callServiceWeather(city);
         log.info("Response [{}]",weather);
-        return (weather instanceof WeatherOutSideResponse )?(WeatherOutSideResponse) weather:null;
+        return weather;
     }
 
 
@@ -55,8 +55,8 @@ public class WeatherController {
     )
     @GetMapping(value = "prediction-aggregate/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public WeatherAggregateResponse predictionAggregate(@PathVariable(value = "city") String city){
-        var weather = resolver.resolve(WeatherType.AGGREGATE).callServiceWeather(city);
+        var weather = resolver.resolve(WeatherType.AGGREGATE,WeatherAggregateResponse.class).callServiceWeather(city);
         log.info("Response [{}]",weather);
-        return (weather instanceof WeatherAggregateResponse )?(WeatherAggregateResponse) weather:null;
+        return weather;
     }
 }
