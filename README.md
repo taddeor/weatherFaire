@@ -7,7 +7,7 @@ Easy to use and build
 
 To build project and start in a Docker container
 
-build.sh `` build with maven and prepare image for docker container``
+to root project launch build.sh `` build with maven and prepare image for docker container``
 
 
 The Boot application expose a swagger documentation http://localhost:8080/swagger-ui.html
