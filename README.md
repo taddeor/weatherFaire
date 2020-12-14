@@ -14,7 +14,7 @@ The Boot application expose a swagger documentation http://localhost:8080/swagge
 
 expose three RESTFul service
 
-RESTful min and max temperature and humidity during work hours
+**RESTful min and max temperature and humidity during work hours**
 
 curl -X GET "http://localhost:8080/prediction-work-hour/{city}" -H  "accept: application/json"
 Response
@@ -29,7 +29,7 @@ Response
     ]
 }
 
-RESTful min and max temperature and humidity aggregate in work hours and outside hours
+**RESTful min and max temperature and humidity aggregate in work hours and outside hours**
 
 curl -X GET "http://localhost:8080/prediction-aggregate/{city}" -H  "accept: application/json"
 Response
@@ -52,7 +52,7 @@ Response
 ]
 }
 
-RESTful min and max temperature and humidity during outside work hours
+**RESTful min and max temperature and humidity during outside work hours**
 
 curl -X GET "http://localhost:8080/prediction-outside-work-hour/{city}" -H  "accept: application/json"
 Response
