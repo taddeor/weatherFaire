@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  weather:
+    image: weather:latest
+    environment:
+      JAVA_MS_OPT: 124
+      JAVA_MX_OPT: 512
+      JAVA_PERMSIZE_OPT : 124
+      JAVA_MAXPERMSIZE_OPT: 258
+    networks:
+      - gsdss_network
+    ports:
+    - 8080:8080
+    restart: always
+
+networks:
+    gsdss_network:
+      external: true
+

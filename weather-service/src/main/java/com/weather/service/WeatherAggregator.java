@@ -1,7 +1,7 @@
 package com.weather.service;
 
-import com.weather.response.WeatherResponse;
+public interface WeatherAggregator<T> {
+    WeatherType WEATHER_TYPE();
 
-public interface WeatherAggregator {
-    WeatherResponse tempWorkHour(String city);
+    T callServiceWeather(String city);
 }

@@ -1,9 +1,11 @@
 package com.weather.controller;
 
-import com.weather.api.WeatherApi;
-import com.weather.bean.weather.Weather;
+import com.weather.factory.Resolver;
+import com.weather.response.WeatherAggregateResponse;
+import com.weather.response.WeatherOutSideResponse;
 import com.weather.response.WeatherResponse;
 import com.weather.service.WeatherAggregator;
+import com.weather.service.WeatherType;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -12,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,25 +24,39 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class WeatherController {
 
-    private final WeatherAggregator weatherAggregator;
+    private final Resolver resolver;
 
     @Operation(
             tags = "Weather",
-            description = "Endpoint to get an workhour"
+            description = "Endpoint to get an prediction for nex three days in work hours"
     )
-    @GetMapping(value = "workhour",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public WeatherResponse tempWorkHour(@RequestParam(value = "city") String city){
-        var weather = weatherAggregator.tempWorkHour(city);
+    @GetMapping(value = "prediction-work-hour/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public WeatherResponse predictionWorkHour(@PathVariable(value = "city") String city){
+        var weather = resolver.resolve(WeatherType.WORKHOUR).callServiceWeather(city);
         log.info("Response [{}]",weather);
-        return null;
+        return(weather instanceof WeatherResponse )?(WeatherResponse) weather:null;
     }
 
     @Operation(
             tags = "Weather",
-            description = "Endpoint to get an outworkhour"
+            description = "Endpoint to get an prediction for nex three days out side work hours"
     )
-    @GetMapping(value = "outworkhour",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public WeatherResponse tempOutWorkHour(){
-    return null;
+    @GetMapping(value = "prediction-outside-work-hour/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public WeatherOutSideResponse predictionOutSideWorkHour(@PathVariable(value = "city") String city){
+        var weather = resolver.resolve(WeatherType.WORKOUTSIDEHOUR).callServiceWeather(city);
+        log.info("Response [{}]",weather);
+        return (weather instanceof WeatherOutSideResponse )?(WeatherOutSideResponse) weather:null;
+    }
+
+
+    @Operation(
+            tags = "Weather",
+            description = "Endpoint to get an prediction for nex three days aggregate in and aout side work hours"
+    )
+    @GetMapping(value = "prediction-aggregate/{city}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public WeatherAggregateResponse predictionAggregate(@PathVariable(value = "city") String city){
+        var weather = resolver.resolve(WeatherType.AGGREGATE).callServiceWeather(city);
+        log.info("Response [{}]",weather);
+        return (weather instanceof WeatherAggregateResponse )?(WeatherAggregateResponse) weather:null;
     }
 }
