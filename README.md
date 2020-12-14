@@ -1,11 +1,16 @@
 # weather case study
 this is an case study for Faire 
 
-it's an Spring Boot application with version Spring-Boot-Version 2.4.1 and JDK 11
+it's an Spring Boot application with Spring-Boot-Version 2.4.1 and JDK 11
 
 Easy to use and build
 
-To build project and start in a Docker container
+
+**Build and start on host**
+
+to root project launch start.sh on host machine `build and lounch java -jar finalname.jar `
+
+**Build project and start in a Docker container**
 
 to root project launch build.sh `` build with maven and prepare image for docker container``
 
