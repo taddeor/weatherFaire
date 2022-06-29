@@ -1,0 +1,77 @@
+gsd:
+  authentication:
+    provider:
+      url: http://localhost:9000
+
+
+spring:
+  application:
+    name: weather-service
+  security:
+    oauth2: #nel caso in cui le API siano protette da JWT
+      resourceserver:
+        opaquetoken:
+          client-id: fooClientIdPassword
+          client-secret: fooClientIdPassword #valida il Token
+          introspection-uri: ${gsd.authentication.provider.url}/auth/oauth/check_token
+        jwt: #verifica il certificato RSA Public
+          jwk-set-uri: ${gsd.authentication.provider.url}/auth/oauth/certs
+      client:
+        registration: #Configurazione di un client
+          weather-client:
+            client-id: messaging-client
+            client-secret: secret
+            client-name: weather-client
+            authorization-grant-type: authorization_code #password #client_credentials #authorization_code
+            provider: gsd-provider
+            redirect-uri: http://127.0.0.1:8082/login/oauth2/code/{registrationId} #http://localhost:8081/login/oauth2/code/custom-client  #http://localhost:8081/authorized #http://localhost:8081/oauth2/authorization/custom-client
+            client-authentication-method: basic
+            scope:
+              - profile
+              - email
+        provider:
+          gsd-provider:
+            issuer-uri: ${gsd.authentication.provider.url}/idp
+#            token-uri: ${gsd.authentication.provider.url}/idp/oauth/token
+#            authorization-uri: ${gsd.authentication.provider.url}/idp/oauth/authorize
+            user-info-uri: ${gsd.authentication.provider.url}/idp/userinfo
+            user-name-attribute: username
+#            jwk-set-uri: ${gsd.authentication.provider.url}/auth/oauth/certs
+
+
+client:
+  security:
+    oauth2:
+      permitall: /home/**
+      login-page: /oauth2/authorization/weather-client
+
+secret:
+  api:
+    key: b380f3b1889768d06b34e25ca7bec57e
+
+base:
+  path: http://api.openweathermap.org/
+
+start:
+  work:
+    hour: 09:00
+
+end:
+  work:
+    hour: 18:00
+
+springdoc:
+  packagesToScan: com.weather.controller
+  swagger-ui:
+    path: /swagger-ui.html
+application:
+  swagger:
+    description: Documentation for weather service Service © 2020 RT
+
+
+server:
+  port: 8082
+  max-http-header-size: 16KB
+
+
+

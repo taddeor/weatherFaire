@@ -16,9 +16,11 @@
     <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jackson.version>2.11.1</jackson.version>
         <lombok.version>1.18.16</lombok.version>
-        <spring.boot.version>2.4.1</spring.boot.version>
+        <spring.boot.version>2.6.7</spring.boot.version>
     </properties>
 
     <dependencies>
@@ -124,14 +126,26 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>spring-releases</id>-->
+<!--            <name>Spring Releases</name>-->
+<!--            <url>https://repo.spring.io/release</url>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+    <distributionManagement>
         <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>nexus-releases</id>
+            <name>Releases</name>
+            <url>https://nexus.grupposandonato.com/repository/maven-releases/</url>
         </repository>
-    </repositories>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Snapshot</name>
+            <url>https://nexus.grupposandonato.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

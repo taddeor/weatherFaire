@@ -25,8 +25,8 @@ import java.util.Map;
 public class WeatherAggregateWorkHours extends AbstractAggregator<WeatherAggregateResponse> {
     @Value("${start.work.hour}")
     private LocalTime startWorkTime;
-    @Value("${end.work.huor}")
-    private LocalTime endWorkTime;
+//    @Value("${end.work.hour}")
+    private LocalTime endWorkTime = LocalTime.of(18,00);
 
     public WeatherAggregateWorkHours(ForecastWeatherApi forecastWeatherApi) {
         super(forecastWeatherApi);
